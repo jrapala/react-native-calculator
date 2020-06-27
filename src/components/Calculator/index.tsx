@@ -35,7 +35,11 @@ const Calculator: React.FC = () => {
 				<CalculatorButton text="+" onPress={() => alert("TODO")} />
 			</Row>
 			<Row>
-				<CalculatorButton text="0" onPress={() => alert("TODO")} />
+				<CalculatorButton
+					text="0"
+					onPress={() => alert("TODO")}
+					size="double"
+				/>
 				<CalculatorButton text="." onPress={() => alert("TODO")} />
 				<CalculatorButton text="=" onPress={() => alert("TODO")} />
 			</Row>
