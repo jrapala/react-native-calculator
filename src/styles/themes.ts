@@ -1,7 +1,7 @@
-import { neutral } from "./colors"
 import { DefaultTheme } from "styled-components/native"
 
 export const iOSDarkTheme: DefaultTheme = {
-	primaryColor: neutral[900],
-	textColorOnPrimary: neutral[50],
+	primaryColor: "#202020",
+	secondaryColor: "#333333",
+	textColorOnPrimary: "#000000",
 }

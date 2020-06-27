@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { SafeAreaView, View, Text, StatusBar } from "react-native"
+import { SafeAreaView, StatusBar } from "react-native"
 import styled, { ThemeProvider } from "styled-components/native"
 
 import { iOSDarkTheme } from "./styles"
+import Calculator from "./components/Calculator"
 
 const App: React.FC = () => {
 	const [theme] = useState(iOSDarkTheme)
@@ -11,12 +12,7 @@ const App: React.FC = () => {
 		<ThemeProvider theme={theme}>
 			<StatusBar barStyle="light-content" />
 			<StyledSafeAreaView>
-				<SectionContainer>
-					<SectionTitle>Welcome</SectionTitle>
-					<SectionDescription>
-						{`This is Juliette's React Native project template.`}
-					</SectionDescription>
-				</SectionContainer>
+				<Calculator />
 			</StyledSafeAreaView>
 		</ThemeProvider>
 	)
@@ -25,23 +21,7 @@ const App: React.FC = () => {
 const StyledSafeAreaView = styled(SafeAreaView)`
 	background-color: ${(props): string => props.theme.primaryColor};
 	flex: 1;
+	justify-content: flex-end;
 `
 
-const SectionContainer = styled(View)`
-	margin-top: 32px;
-	padding: 0 24px;
-`
-
-const SectionTitle = styled(Text)`
-	color: ${(props): string => props.theme.textColorOnPrimary};
-	font-size: 24px;
-	font-weight: 600;
-`
-
-const SectionDescription = styled(Text)`
-	color: ${(props): string => props.theme.textColorOnPrimary};
-	font-size: 18px;
-	font-weight: 400;
-	margin-top: 8px;
-`
 export default App
