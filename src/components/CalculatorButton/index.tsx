@@ -7,19 +7,26 @@ import normalize from "../../utils/normalize"
 const screen = Dimensions.get("window")
 
 interface Props {
+	componentTheme?: string
 	onPress: () => void
-	size: string
+	size?: string
 	text: string
 }
 
 interface ButtonProps {
-	size: string
+	componentTheme?: string
+	size?: string
 }
 
-const CalculatorButton: React.FC<Props> = ({ onPress, size, text }) => {
+const CalculatorButton: React.FC<Props> = ({
+	componentTheme,
+	onPress,
+	size,
+	text,
+}) => {
 	return (
-		<Button size={size} onPress={onPress}>
-			<ButtonText>{text}</ButtonText>
+		<Button componentTheme={componentTheme} size={size} onPress={onPress}>
+			<ButtonText componentTheme={componentTheme}>{text}</ButtonText>
 		</Button>
 	)
 }
@@ -28,7 +35,12 @@ const columnWidth = screen.width / 4
 
 const Button = styled(TouchableOpacity)<ButtonProps>`
 	align-items: center;
-	background-color: ${(props): string => props.theme.secondaryColor};
+	background-color: ${(props): string =>
+		props.componentTheme === "secondary"
+			? props.theme.secondaryColor
+			: props.componentTheme === "accent"
+			? props.theme.accentColor
+			: props.theme.primaryColor};
 	border-radius: ${Math.floor(columnWidth) + "px"};
 	flex: 1;
 	height: ${Math.floor(columnWidth - 10) + "px"};
@@ -45,9 +57,13 @@ const Button = styled(TouchableOpacity)<ButtonProps>`
 		`}
 `
 
-const ButtonText = styled(Text)`
-	color: #fff;
-	font-size: ${normalize(20) + "px"};
+const ButtonText = styled(Text)<ButtonProps>`
+	color: ${(props): string =>
+		props.componentTheme === "secondary"
+			? props.theme.textColorOnSecondaryColor
+			: props.theme.textColorOnBackgroundColor};
+	font-size: ${normalize(30) + "px"};
+	font-weight: 500;
 `
 
 export default CalculatorButton

@@ -19,7 +19,7 @@ const App: React.FC = () => {
 }
 
 const StyledSafeAreaView = styled(SafeAreaView)`
-	background-color: ${(props): string => props.theme.primaryColor};
+	background-color: ${(props): string => props.theme.backgroundColor};
 	flex: 1;
 	justify-content: flex-end;
 `
