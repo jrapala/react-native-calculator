@@ -1,10 +1,8 @@
 import React, { Fragment, useState } from "react"
-import { Text } from "react-native"
-import styled from "styled-components/native"
 
 import Row from "../Row"
+import CalculatorTotal from "../CalculatorTotal"
 import CalculatorButton from "../CalculatorButton"
-import normalize from "../../utils/normalize"
 
 const Calculator: React.FC = () => {
 	const [currentValue, setCurrentValue] = useState<string>("0")
@@ -27,9 +25,7 @@ const Calculator: React.FC = () => {
 
 	return (
 		<Fragment>
-			<CalculatorTotal>
-				{parseFloat(currentValue).toLocaleString()}
-			</CalculatorTotal>
+			<CalculatorTotal total={currentValue} />
 			<Row>
 				<CalculatorButton
 					text="AC"
@@ -131,14 +127,5 @@ const Calculator: React.FC = () => {
 		</Fragment>
 	)
 }
-
-const CalculatorTotal = styled(Text)`
-	color: ${(props): string => props.theme.textColorOnBackgroundColor};
-	font-size: ${normalize(70) + "px"};
-	font-weight: 300;
-	margin-bottom: 2%;
-	margin-right: 5%;
-	text-align: right;
-`
 
 export default Calculator
