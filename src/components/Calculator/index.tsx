@@ -6,21 +6,58 @@ import CalculatorButton from "../CalculatorButton"
 
 const Calculator: React.FC = () => {
 	const [currentValue, setCurrentValue] = useState<string>("0")
+	const [previousValue, setPreviousValue] = useState<string>("")
+	const [currentOperator, setCurrentOperator] = useState<string>("")
+	const [isTotal, setIsTotal] = useState<boolean>(false)
 
-	const handleTap = (type: string, value: number | string): void => {
+	const handleTap = (type: string, value?: number | string): void => {
 		setCurrentValue(currentState => {
 			if (type === "number") {
-				if (currentState === "0") {
+				if (isTotal || currentState === "0") {
 					return `${value}`
-				} else if (currentState.length <= 8) {
+				} else if (!isTotal && currentState.length <= 8) {
 					return `${currentState}${value}`
 				} else {
 					return `${currentState}`
 				}
-			} else {
+			}
+
+			if (type === "operator" && value) {
+				setPreviousValue(currentState)
+				setCurrentOperator(value.toString())
 				return "0"
 			}
+
+			if (type === "equal") {
+				const current = parseFloat(currentState)
+				const previous = parseFloat(previousValue)
+
+				switch (currentOperator) {
+					case "+":
+						prepareForTotal()
+						return `${previous + current}`
+					case "-":
+						prepareForTotal()
+						return `${previous - current}`
+					case "*":
+						prepareForTotal()
+						return `${previous * current}`
+					case "/":
+						prepareForTotal()
+						return `${previous / current}`
+					default:
+						return `${currentState}`
+				}
+			}
+
+			return "0"
 		})
+	}
+
+	const prepareForTotal = (): void => {
+		setIsTotal(true)
+		setPreviousValue("")
+		setCurrentOperator("")
 	}
 
 	return (
@@ -42,10 +79,9 @@ const Calculator: React.FC = () => {
 					onPress={() => alert("TODO")}
 					componentTheme="secondary"
 				/>
-				{/* Division */}
 				<CalculatorButton
 					text="&#247;"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("operator", "/")}
 					componentTheme="accent"
 				/>
 			</Row>
@@ -62,10 +98,9 @@ const Calculator: React.FC = () => {
 					text="9"
 					onPress={(): void => handleTap("number", 9)}
 				/>
-				{/* Multiplication */}
 				<CalculatorButton
 					text="&#215;"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("operator", "*")}
 					componentTheme="accent"
 				/>
 			</Row>
@@ -82,10 +117,9 @@ const Calculator: React.FC = () => {
 					text="6"
 					onPress={(): void => handleTap("number", 6)}
 				/>
-				{/* Subtraction */}
 				<CalculatorButton
 					text="&#8211;"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("operator", "-")}
 					componentTheme="accent"
 				/>
 			</Row>
@@ -104,7 +138,7 @@ const Calculator: React.FC = () => {
 				/>
 				<CalculatorButton
 					text="+"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("operator", "+")}
 					componentTheme="accent"
 				/>
 			</Row>
@@ -120,7 +154,7 @@ const Calculator: React.FC = () => {
 				/>
 				<CalculatorButton
 					text="="
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("equal")}
 					componentTheme="accent"
 				/>
 			</Row>
