@@ -24,6 +24,9 @@ const CalculatorTotal: React.FC<Props> = ({ total }) => {
 		case 9:
 			size = 50
 			break
+		case 10:
+			size = 45
+			break
 		default:
 			size = 70
 	}
