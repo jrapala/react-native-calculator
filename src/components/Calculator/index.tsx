@@ -13,9 +13,12 @@ const Calculator: React.FC = () => {
 	const handleTap = (type: string, value?: number | string): void => {
 		setCurrentValue(currentState => {
 			if (type === "number") {
-				if (isTotal || currentState === "0") {
+				if (isTotal) {
+					setIsTotal(false)
 					return `${value}`
-				} else if (!isTotal && currentState.length <= 8) {
+				} else if (currentState === "0") {
+					return `${value}`
+				} else if (currentState.length <= 8) {
 					return `${currentState}${value}`
 				} else {
 					return `${currentState}`
