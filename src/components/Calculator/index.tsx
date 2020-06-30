@@ -53,12 +53,29 @@ const Calculator: React.FC = () => {
 				}
 			}
 
+			if (type === "clear") {
+				clear()
+				return "0"
+			}
+
+			if (type === "posneg") {
+				return `${parseFloat(currentValue) * -1}`
+			}
+
+			if (type === "percentage") {
+				return `${parseFloat(currentValue) * 0.01}`
+			}
+
 			return "0"
 		})
 	}
 
 	const prepareForTotal = (): void => {
 		setIsTotal(true)
+		clear()
+	}
+
+	const clear = (): void => {
 		setPreviousValue("")
 		setCurrentOperator("")
 	}
@@ -69,17 +86,17 @@ const Calculator: React.FC = () => {
 			<Row>
 				<CalculatorButton
 					text="AC"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("clear")}
 					componentTheme="secondary"
 				/>
 				<CalculatorButton
 					text="+/-"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("posneg")}
 					componentTheme="secondary"
 				/>
 				<CalculatorButton
 					text="%"
-					onPress={() => alert("TODO")}
+					onPress={(): void => handleTap("percentage")}
 					componentTheme="secondary"
 				/>
 				<CalculatorButton
